@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRIAR | Autenticação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --swiss-dark: #0A1128;
+            --swiss-light: #FAFAFA;
+            --swiss-blue: #0033CC;
+            --swiss-green: #00E676;
+            --grid-line: 3px solid var(--swiss-dark);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E5E7EB;
+            color: var(--swiss-dark);
+        }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        .border-swiss { border: var(--grid-line); }
+        .border-swiss-b { border-bottom: var(--grid-line); }
+        .border-swiss-t { border-top: var(--grid-line); }
+        .border-swiss-l { border-left: var(--grid-line); }
+        .border-swiss-r { border-right: var(--grid-line); }
+
+        /* Form Elements Standardized */
+        .swiss-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--swiss-dark);
+            padding: 0.75rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            color: var(--swiss-dark);
+            outline: none;
+            transition: all 0.2s;
+        }
+        .swiss-input:focus {
+            border-bottom-color: var(--swiss-blue);
+            background-color: rgba(0, 51, 204, 0.05);
+        }
+        
+        .swiss-select {
+            appearance: none;
+            border-radius: 0;
+            cursor: pointer;
+        }
+
+        .swiss-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--swiss-dark);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Buttons Standardized */
+        .btn-swiss {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: var(--grid-line);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .btn-dark { background: var(--swiss-dark); color: var(--swiss-light); }
+        .btn-dark:hover { background: var(--swiss-blue); color: var(--swiss-light); }
+
+        .proto-nav-btn.active {
+            background-color: var(--swiss-dark);
+            color: var(--swiss-green);
+        }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #E5E7EB; border-left: 2px solid #0A1128; }
+        ::-webkit-scrollbar-thumb { background: #0A1128; }
+    </style>
+</head>
+<body class="selection:bg-[#0033CC] selection:text-white h-screen flex flex-col overflow-hidden">
+
+    <!-- PROTOTYPE NAVIGATOR -->
+    <div class="bg-white border-b-4 border-[#0A1128] p-3 flex justify-between items-center z-50 shrink-0 shadow-md">
+        <div class="font-mono text-xs font-bold px-4 uppercase tracking-widest text-[#0033CC]">Telas de Autenticação</div>
+        <div class="flex gap-2 flex-wrap justify-end">
+            <button onclick="showScreen('flow-jovem')" class="proto-nav-btn active px-4 py-2 border border-black text-xs font-mono font-bold uppercase transition-colors">1. Jovem</button>
+            <button onclick="showScreen('flow-gestor')" class="proto-nav-btn px-4 py-2 border border-black text-xs font-mono font-bold uppercase transition-colors bg-gray-100 hover:bg-gray-200">2. Gestor CRIAR</button>
+            <button onclick="showScreen('flow-parceiro')" class="proto-nav-btn px-4 py-2 border border-black text-xs font-mono font-bold uppercase transition-colors bg-gray-100 hover:bg-gray-200">3. Parceiro</button>
+            <button onclick="showScreen('flow-empresa')" class="proto-nav-btn px-4 py-2 border border-black text-xs font-mono font-bold uppercase transition-colors bg-gray-100 hover:bg-gray-200">4. Empresa</button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow relative overflow-y-auto flex flex-col items-center">
+        
+        <!-- ========================================== -->
+        <!-- 1. FLUXO: PORTAL DO JOVEM                  -->
+        <!-- ========================================== -->
+        <div id="flow-jovem" class="w-full bg-white flex flex-col proto-screen">
+            
+            <!-- LOGIN SECTION -->
+            <div class="flex flex-col md:flex-row min-h-[600px] w-full">
+                <!-- Branding Left -->
+                <div class="w-full md:w-5/12 bg-[#0A1128] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-r relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h1 class="text-4xl font-black uppercase tracking-tighter mb-2">CRIAR<span class="text-[#00E676]">.</span></h1>
+                        <span class="font-mono text-[10px] uppercase tracking-widest border border-white inline-block px-2 py-1 mt-2">Portal do Jovem</span>
+                    </div>
+                    <div class="relative z-10 mt-12">
+                        <i data-lucide="cpu" class="w-10 h-10 text-[#00E676] mb-6"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none">Sua jornada<br>continua.</h3>
+                        <p class="font-light text-sm text-gray-400">Acompanhe suas turmas de robótica, bolsa permanência e evolução no PDI.</p>
+                    </div>
+                </div>
+                
+                <!-- Form Right -->
+                <div class="w-full md:w-7/12 bg-[#FAFAFA] p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-black uppercase text-[#0A1128]">Acesso à Conta</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Insira suas credenciais para continuar</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div>
+                            <label class="swiss-label">CPF / Matrícula</label>
+                            <input type="text" class="swiss-input" placeholder="000.000.000-00">
+                        </div>
+                        <div>
+                            <label class="swiss-label">Senha</label>
+                            <input type="password" class="swiss-input" placeholder="••••••••">
+                        </div>
+                        <div class="pt-6 mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <a href="#cadastro-jovem" class="font-mono text-[10px] font-bold uppercase underline hover:text-[#0033CC] text-gray-500">Primeiro acesso? Crie sua conta</a>
+                            <button type="submit" class="btn-swiss btn-dark w-full sm:w-auto gap-2 text-sm">
+                                Entrar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- STANDARD DIVIDER -->
+            <div id="cadastro-jovem" class="w-full border-swiss-t border-swiss-b bg-[#00E676] text-[#0A1128] p-4 text-center font-mono text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                <i data-lucide="arrow-down" class="w-4 h-4"></i> Área de Cadastro Abaixo <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </div>
+
+            <!-- REGISTRATION SECTION -->
+            <div class="flex flex-col md:flex-row-reverse min-h-[700px] w-full">
+                <!-- Branding Right -->
+                <div class="w-full md:w-4/12 bg-[#0033CC] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-l relative overflow-hidden">
+                    <div class="relative z-10">
+                        <i data-lucide="user-plus" class="w-12 h-12 mb-6 text-[#00E676]"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none tracking-tighter">O Primeiro<br>Passo.</h3>
+                        <p class="font-light text-sm text-blue-200">Inicie sua trilha de desenvolvimento conectando-se à nossa rede de apoio.</p>
+                    </div>
+                    <div class="relative z-10 mt-8 border-t-2 border-[#00E676] pt-6">
+                        <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-[#00E676]">"Ninguém Fica Para Trás"</p>
+                    </div>
+                </div>
+                
+                <!-- Form Left -->
+                <div class="w-full md:w-8/12 bg-white p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-black uppercase text-[#0A1128]">Registro de Jovem</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Preencha seus dados para triagem e alocação</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div>
+                            <label class="swiss-label">Nome Completo</label>
+                            <input type="text" class="swiss-input" placeholder="Seu nome completo">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">CPF</label>
+                                <input type="text" class="swiss-input" placeholder="000.000.000-00">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Data de Nascimento</label>
+                                <input type="date" class="swiss-input font-mono">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">Celular / WhatsApp</label>
+                                <input type="tel" class="swiss-input" placeholder="(00) 00000-0000">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Unidade de Origem</label>
+                                <select class="swiss-input swiss-select font-mono bg-transparent">
+                                    <option value="" disabled selected>Selecione a unidade...</option>
+                                    <option>FUNASE - CASE Recife</option>
+                                    <option>Programa de Semiliberdade</option>
+                                    <option>Outros (Rede de Apoio)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="swiss-label">Crie uma Senha Segura</label>
+                            <input type="password" class="swiss-input" placeholder="Mínimo 8 caracteres">
+                        </div>
+                        <div class="pt-6 mt-4 flex justify-end">
+                            <button type="submit" class="btn-swiss btn-dark gap-2 text-sm w-full md:w-auto">
+                                Iniciar Jornada <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 2. FLUXO: GESTOR CRIAR (Admin)             -->
+        <!-- ========================================== -->
+        <div id="flow-gestor" class="w-full bg-white flex flex-col proto-screen hidden">
+            
+            <!-- LOGIN SECTION -->
+            <div class="flex flex-col md:flex-row min-h-[600px] w-full">
+                <!-- Branding Left -->
+                <div class="w-full md:w-5/12 bg-[#0A1128] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-r relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h1 class="text-4xl font-black uppercase tracking-tighter mb-2">CRIAR<span class="text-[#00E676]">.</span></h1>
+                        <span class="font-mono text-[10px] uppercase tracking-widest border border-white inline-block px-2 py-1 mt-2">Acesso Restrito</span>
+                    </div>
+                    <div class="relative z-10 mt-12">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-[#00E676] mb-6"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none">Painel de<br>Orquestração.</h3>
+                        <p class="font-light text-sm text-gray-400">Ambiente de gestão para equipe operacional, educadores e núcleo psicossocial.</p>
+                    </div>
+                </div>
+                
+                <!-- Form Right -->
+                <div class="w-full md:w-7/12 bg-[#FAFAFA] p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-black uppercase text-[#0A1128]">Acesso à Conta</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Insira suas credenciais administrativas</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div>
+                            <label class="swiss-label">E-mail Corporativo (@criar.org)</label>
+                            <input type="email" class="swiss-input" placeholder="nome@criar.org">
+                        </div>
+                        <div>
+                            <label class="swiss-label">Senha Administrativa</label>
+                            <input type="password" class="swiss-input" placeholder="••••••••">
+                        </div>
+                        <div class="pt-6 mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <a href="#cadastro-gestor" class="font-mono text-[10px] font-bold uppercase underline hover:text-[#0033CC] text-gray-500">Novo colaborador? Solicite acesso</a>
+                            <button type="submit" class="btn-swiss btn-dark w-full sm:w-auto gap-2 text-sm">
+                                Entrar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- STANDARD DIVIDER -->
+            <div id="cadastro-gestor" class="w-full border-swiss-t border-swiss-b bg-[#00E676] text-[#0A1128] p-4 text-center font-mono text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                <i data-lucide="arrow-down" class="w-4 h-4"></i> Área de Cadastro Abaixo <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </div>
+
+            <!-- REGISTRATION SECTION -->
+            <div class="flex flex-col md:flex-row-reverse min-h-[700px] w-full">
+                <!-- Branding Right -->
+                <div class="w-full md:w-4/12 bg-[#0033CC] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-l relative overflow-hidden">
+                    <div class="relative z-10">
+                        <i data-lucide="fingerprint" class="w-12 h-12 mb-6 text-[#00E676]"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none tracking-tighter">Onboarding<br>Interno.</h3>
+                        <p class="font-light text-sm text-blue-200">Credenciamento seguro de staff, gestores e operadores do sistema CRIAR.</p>
+                    </div>
+                    <div class="relative z-10 mt-8 border-t-2 border-[#00E676] pt-6">
+                        <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-[#00E676]">Nível: Staff / Admin</p>
+                    </div>
+                </div>
+                
+                <!-- Form Left -->
+                <div class="w-full md:w-8/12 bg-white p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-black uppercase text-[#0A1128]">Registro de Staff</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Preencha seus dados para solicitar credenciamento</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">Nome Completo</label>
+                                <input type="text" class="swiss-input" placeholder="Nome do colaborador">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Matrícula / CRP</label>
+                                <input type="text" class="swiss-input font-mono" placeholder="Ex: CRP-02/12345">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">E-mail Corporativo</label>
+                                <input type="email" class="swiss-input" placeholder="nome@criar.org">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Função / Setor</label>
+                                <select class="swiss-input swiss-select font-mono bg-transparent">
+                                    <option value="" disabled selected>Selecione a função...</option>
+                                    <option>Apoio Psicossocial (PDI)</option>
+                                    <option>Gestão Operacional (CRM)</option>
+                                    <option>Relacionamento B2B</option>
+                                    <option>Root Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="swiss-label">Criar Senha Temporária</label>
+                            <input type="password" class="swiss-input" placeholder="Mínimo 8 caracteres">
+                        </div>
+                        <div class="pt-6 mt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <button type="submit" class="btn-swiss btn-dark gap-2 text-sm w-full md:w-auto">
+                                Solicitar Acesso <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+                            <p class="font-mono text-[10px] text-gray-500 uppercase max-w-xs">Cadastro sujeito à aprovação da administração.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. FLUXO: PORTAL DO PARCEIRO               -->
+        <!-- ========================================== -->
+        <div id="flow-parceiro" class="w-full bg-white flex flex-col proto-screen hidden">
+            
+            <!-- LOGIN SECTION -->
+            <div class="flex flex-col md:flex-row min-h-[600px] w-full">
+                <!-- Branding Left -->
+                <div class="w-full md:w-5/12 bg-[#0A1128] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-r relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h1 class="text-4xl font-black uppercase tracking-tighter mb-2">CRIAR<span class="text-[#00E676]">.</span></h1>
+                        <span class="font-mono text-[10px] uppercase tracking-widest border border-white inline-block px-2 py-1 mt-2">Rede Formadora</span>
+                    </div>
+                    <div class="relative z-10 mt-12">
+                        <i data-lucide="building-2" class="w-10 h-10 text-[#00E676] mb-6"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none">Gestão de<br>Turmas.</h3>
+                        <p class="font-light text-sm text-gray-400">Acesso exclusivo para instrutores lançarem frequências e marcos educacionais da jornada.</p>
+                    </div>
+                </div>
+                
+                <!-- Form Right -->
+                <div class="w-full md:w-7/12 bg-[#FAFAFA] p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-black uppercase text-[#0A1128]">Acesso à Conta</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Insira as credenciais da instituição formadora</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div>
+                            <label class="swiss-label">CNPJ ou E-mail Institucional</label>
+                            <input type="text" class="swiss-input" placeholder="00.000.000/0001-00">
+                        </div>
+                        <div>
+                            <label class="swiss-label">Senha de Acesso</label>
+                            <input type="password" class="swiss-input" placeholder="••••••••">
+                        </div>
+                        <div class="pt-6 mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <a href="#cadastro-parceiro" class="font-mono text-[10px] font-bold uppercase underline hover:text-[#0033CC] text-gray-500">Deseja ser uma instituição parceira?</a>
+                            <button type="submit" class="btn-swiss btn-dark w-full sm:w-auto gap-2 text-sm">
+                                Entrar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- STANDARD DIVIDER -->
+            <div id="cadastro-parceiro" class="w-full border-swiss-t border-swiss-b bg-[#00E676] text-[#0A1128] p-4 text-center font-mono text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                <i data-lucide="arrow-down" class="w-4 h-4"></i> Área de Cadastro Abaixo <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </div>
+
+            <!-- REGISTRATION SECTION -->
+            <div class="flex flex-col md:flex-row-reverse min-h-[700px] w-full">
+                <!-- Branding Right -->
+                <div class="w-full md:w-4/12 bg-[#0033CC] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-l relative overflow-hidden">
+                    <div class="relative z-10">
+                        <i data-lucide="network" class="w-12 h-12 mb-6 text-[#00E676]"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none tracking-tighter">Amplie o<br>Impacto.</h3>
+                        <p class="font-light text-sm text-blue-200">Faça parte da nossa rede de escolas e ONGs parceiras, conectando talentos ao mercado.</p>
+                    </div>
+                    <div class="relative z-10 mt-8 border-t-2 border-[#00E676] pt-6">
+                        <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-[#00E676]">Rede Homologada</p>
+                    </div>
+                </div>
+                
+                <!-- Form Left -->
+                <div class="w-full md:w-8/12 bg-white p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-black uppercase text-[#0A1128]">Credenciamento Formador</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Preencha os dados institucionais para parceria</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">CNPJ da Instituição</label>
+                                <input type="text" class="swiss-input" placeholder="00.000.000/0001-00">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Razão Social / Fantasia</label>
+                                <input type="text" class="swiss-input" placeholder="Ex: CESAR School">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">Nome do Coordenador</label>
+                                <input type="text" class="swiss-input" placeholder="Responsável pela parceria">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Telefone / WhatsApp</label>
+                                <input type="tel" class="swiss-input" placeholder="(00) 0000-0000">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="swiss-label">E-mail Institucional</label>
+                            <input type="email" class="swiss-input" placeholder="contato@instituicao.org">
+                        </div>
+                        <div class="pt-6 mt-4 flex justify-end">
+                            <button type="submit" class="btn-swiss btn-dark gap-2 text-sm w-full md:w-auto">
+                                Submeter Proposta <i data-lucide="file-check-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 4. FLUXO: EMPRESA PATROCINADORA (ESG)      -->
+        <!-- ========================================== -->
+        <div id="flow-empresa" class="w-full bg-white flex flex-col proto-screen hidden">
+            
+            <!-- LOGIN SECTION -->
+            <div class="flex flex-col md:flex-row min-h-[600px] w-full">
+                <!-- Branding Left -->
+                <div class="w-full md:w-5/12 bg-[#0A1128] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-r relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h1 class="text-4xl font-black uppercase tracking-tighter mb-2">CRIAR<span class="text-[#00E676]">.</span></h1>
+                        <span class="font-mono text-[10px] uppercase tracking-widest border border-white inline-block px-2 py-1 mt-2">Investidor ESG</span>
+                    </div>
+                    <div class="relative z-10 mt-12">
+                        <i data-lucide="line-chart" class="w-10 h-10 text-[#00E676] mb-6"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none">Mensure o<br>Impacto.</h3>
+                        <p class="font-light text-sm text-gray-400">Acesse relatórios auditáveis (GRI), acompanhe o tracking da sua cota e identifique talentos.</p>
+                    </div>
+                </div>
+                
+                <!-- Form Right -->
+                <div class="w-full md:w-7/12 bg-[#FAFAFA] p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-black uppercase text-[#0A1128]">Acesso à Conta</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Insira as credenciais do seu portal corporativo</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div>
+                            <label class="swiss-label">E-mail Corporativo</label>
+                            <input type="email" class="swiss-input" placeholder="seu.nome@empresa.com.br">
+                        </div>
+                        <div>
+                            <label class="swiss-label">Senha</label>
+                            <input type="password" class="swiss-input" placeholder="••••••••">
+                        </div>
+                        <div class="pt-6 mt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+                            <a href="#cadastro-empresa" class="font-mono text-[10px] font-bold uppercase underline hover:text-[#0033CC] text-gray-500">Ainda não é um patrocinador ESG?</a>
+                            <button type="submit" class="btn-swiss btn-dark w-full sm:w-auto gap-2 text-sm">
+                                Entrar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- STANDARD DIVIDER -->
+            <div id="cadastro-empresa" class="w-full border-swiss-t border-swiss-b bg-[#00E676] text-[#0A1128] p-4 text-center font-mono text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                <i data-lucide="arrow-down" class="w-4 h-4"></i> Área de Cadastro Abaixo <i data-lucide="arrow-down" class="w-4 h-4"></i>
+            </div>
+
+            <!-- REGISTRATION SECTION -->
+            <div class="flex flex-col md:flex-row-reverse min-h-[700px] w-full">
+                <!-- Branding Right -->
+                <div class="w-full md:w-4/12 bg-[#0033CC] text-white p-12 flex flex-col justify-between border-swiss-b md:border-swiss-b-0 md:border-swiss-l relative overflow-hidden">
+                    <div class="relative z-10">
+                        <i data-lucide="briefcase" class="w-12 h-12 mb-6 text-[#00E676]"></i>
+                        <h3 class="text-4xl font-black uppercase mb-4 leading-none tracking-tighter">Abra uma<br>Cota ESG.</h3>
+                        <p class="font-light text-sm text-blue-200">Transforme seu imposto de renda ou orçamento de D&I em impacto social auditável e retenção de talentos.</p>
+                    </div>
+                    <div class="relative z-10 mt-8 border-t-2 border-[#00E676] pt-6">
+                        <p class="font-mono text-[10px] font-bold uppercase tracking-widest text-[#00E676]">LGPD Compliant</p>
+                    </div>
+                </div>
+                
+                <!-- Form Left -->
+                <div class="w-full md:w-8/12 bg-white p-12 flex flex-col justify-center">
+                    <div class="mb-10">
+                        <h2 class="text-2xl font-black uppercase text-[#0A1128]">Cadastro Corporativo</h2>
+                        <p class="font-mono text-xs text-gray-500 mt-2">Preencha os dados para agendar uma apresentação executiva</p>
+                    </div>
+                    <form onsubmit="event.preventDefault();" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">CNPJ da Empresa</label>
+                                <input type="text" class="swiss-input" placeholder="00.000.000/0001-00">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Razão Social</label>
+                                <input type="text" class="swiss-input" placeholder="Sua Empresa S.A.">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">Representante (Sponsor ESG)</label>
+                                <input type="text" class="swiss-input" placeholder="Diretor / Gerente">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Setor de Atuação</label>
+                                <select class="swiss-input swiss-select font-mono bg-transparent">
+                                    <option value="" disabled selected>Selecione a indústria...</option>
+                                    <option>Tecnologia da Informação</option>
+                                    <option>Indústria / Manufatura</option>
+                                    <option>Varejo / E-commerce</option>
+                                    <option>Finanças / Bancos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="swiss-label">E-mail Corporativo</label>
+                                <input type="email" class="swiss-input" placeholder="nome@empresa.com.br">
+                            </div>
+                            <div>
+                                <label class="swiss-label">Telefone de Contato</label>
+                                <input type="tel" class="swiss-input font-mono" placeholder="(00) 0000-0000">
+                            </div>
+                        </div>
+                        
+                        <div class="pt-6 mt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <button type="submit" class="btn-swiss btn-dark gap-2 text-sm w-full md:w-auto">
+                                Solicitar Cota <i data-lucide="building" class="w-4 h-4"></i>
+                            </button>
+                            <p class="font-mono text-center text-[10px] text-gray-500 uppercase max-w-sm">Nossa equipe entrará em contato para estruturar o SLA de relatórios GRI.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function showScreen(screenId) {
+            // Hide all flow screens
+            document.querySelectorAll('.proto-screen').forEach(el => el.classList.add('hidden'));
+            // Show target flow screen
+            document.getElementById(screenId).classList.remove('hidden');
+            
+            // Update nav buttons
+            document.querySelectorAll('.proto-nav-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-[#0A1128]', 'text-[#00E676]');
+                btn.classList.add('bg-gray-100', 'text-black');
+            });
+            
+            // Set active button styles
+            const activeBtn = event.currentTarget;
+            activeBtn.classList.remove('bg-gray-100', 'text-black');
+            activeBtn.classList.add('active', 'bg-[#0A1128]', 'text-[#00E676]');
+
+            // Scroll to top of the newly shown screen
+            document.querySelector('main').scrollTop = 0;
+        }
+    </script>
+</body>
+</html>
